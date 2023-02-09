@@ -8,7 +8,6 @@ readme = "README.md"
 description = "High level bindings to the QuickJS javascript engine"
 keywords = ["quickrs", "ecmascript", "javascript", "es6", "es2020"]
 categories = ["api-bindings"]
-repository = "https://github.com/DelSkayn/rquickjs.git"
 
 [dependencies.rquickjs-core]
 version = "0.1.7"
