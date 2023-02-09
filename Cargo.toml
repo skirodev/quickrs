@@ -1,12 +1,12 @@
 [package]
-name = "rquickjs"
+name = "quickrs"
 version = "0.1.7"
-authors = ["Mees Delzenne <mees.delzenne@gmail.com>", "K. <kayo@illumium.org>"]
+authors = []
 edition = "2018"
 license = "MIT"
 readme = "README.md"
 description = "High level bindings to the QuickJS javascript engine"
-keywords = ["quickjs", "ecmascript", "javascript", "es6", "es2020"]
+keywords = ["quickrs", "ecmascript", "javascript", "es6", "es2020"]
 categories = ["api-bindings"]
 repository = "https://github.com/DelSkayn/rquickjs.git"
 
