@@ -1,10 +1,10 @@
-use rquickjs::{
+use quickrs::{
     BuiltinLoader, BuiltinResolver, Context, FileResolver, Func, ModuleLoader, NativeLoader,
     Runtime, ScriptLoader,
 };
 
 mod bundle;
-use bundle::{NativeModule, SCRIPT_MODULE};
+use bundle::{SCRIPT_MODULE};
 
 fn print(msg: String) {
     println!("{}", msg);
@@ -13,8 +13,8 @@ fn print(msg: String) {
 fn main() {
     let resolver = (
         BuiltinResolver::default()
-            .with_module("bundle/script_module")
-            .with_module("bundle/native_module"),
+            .with_module("bundle/script_module"),
+        //  .with_module("bundle/native_module"),
         FileResolver::default()
             .with_path("./")
             .with_path("../../target/debug")
@@ -22,7 +22,7 @@ fn main() {
     );
     let loader = (
         BuiltinLoader::default().with_module("bundle/script_module", SCRIPT_MODULE),
-        ModuleLoader::default().with_module("bundle/native_module", NativeModule),
+    //  ModuleLoader::default().with_module("bundle/native_module", NativeModule),
         ScriptLoader::default(),
         NativeLoader::default(),
     );
@@ -42,20 +42,9 @@ fn main() {
 import { n, s, f } from "script_module";
 print(`n = ${n}`);
 print(`s = "${s}"`);
+
 print(`f(2, 4) = ${f(2, 4)}`);
 "#,
-        )
-        .unwrap();
-
-        println!("import native module");
-        ctx.compile(
-            "test",
-            r#"
-import { n, s, f } from "native_module";
-print(`n = ${n}`);
-print(`s = "${s}"`);
-print(`f(2, 4) = ${f(2, 4)}`);
-                "#,
         )
         .unwrap();
 
@@ -63,7 +52,7 @@ print(`f(2, 4) = ${f(2, 4)}`);
         ctx.compile(
             "test",
             r#"
-import { n, s, f } from "bundle/script_module";
+import { n, s, f, metaurl, metaf } from "bundle/script_module";
 print(`n = ${n}`);
 print(`s = "${s}"`);
 print(`f(2, 4) = ${f(2, 4)}`);

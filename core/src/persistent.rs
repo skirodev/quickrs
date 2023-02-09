@@ -40,7 +40,7 @@ outlive_impls! {
 ///
 /// For example you can store JS functions for later use.
 /// ```
-/// # use rquickjs::{Runtime, Context, Persistent, Function};
+/// # use quickrs::{Runtime, Context, Persistent, Function};
 /// # let rt = Runtime::new().unwrap();
 /// # let ctx = Context::full(&rt).unwrap();
 /// let func = ctx.with(|ctx| {

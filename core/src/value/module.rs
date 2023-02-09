@@ -145,7 +145,7 @@ impl<'js> Module<'js> {
 /// Helper macro to provide module init function
 ///
 /// ```
-/// use rquickjs::{ModuleDef, module_init};
+/// use quickrs::{ModuleDef, module_init};
 ///
 /// struct MyModule;
 /// impl ModuleDef for MyModule {}
@@ -188,11 +188,19 @@ impl<'js> Module<'js> {
             qjs::JS_EVAL_TYPE_MODULE | qjs::JS_EVAL_FLAG_STRICT | qjs::JS_EVAL_FLAG_COMPILE_ONLY;
         Ok(Module(
             unsafe {
-                let value = Value::from_js_value_const(
+                let mut value = Value::from_js_value_const(
                     ctx,
                     ctx.eval_raw(source, name.as_c_str(), flag as _)?,
                 );
                 debug_assert!(value.is_module());
+                let mut m: &Module = value.as_module().unwrap();
+                match m.meta::<crate::Object>() {
+                    Ok(meta) => {
+                        let url = "file:///".to_owned() + &name.into_string().unwrap();
+                        meta.set("url", crate::String::from_str(ctx, &url)).unwrap();
+                    },
+                    Err(_) => {}
+                }
                 value
             },
             PhantomData,

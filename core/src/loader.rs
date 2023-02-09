@@ -38,7 +38,7 @@ pub trait Resolver {
     /// The resolving may looks like:
     ///
     /// ```no_run
-    /// # use rquickjs::{Ctx, Result, Error};
+    /// # use quickrs::{Ctx, Result, Error};
     /// # fn default_resolve<'js>(_ctx: Ctx<'js>, base: &str, name: &str) -> Result<String> {
     /// Ok(if !name.starts_with('.') {
     ///     name.into()
