@@ -1,18 +1,11 @@
 [package]
 name = "native-module"
 version = "0.1.0"
-authors = ["K. <kayo@illumium.org>"]
+authors = ["Skiro"]
 edition = "2018"
 publish = false
-
-[lib]
-crate-type = ["cdylib"]
 
 [dependencies.rquickjs]
 path = "../.."
 default-features = false
-features = ["async-std", "rust-alloc"]
-
-[features]
-default = ["macro"]
-macro = ["rquickjs/macro"]
+features = ["exports", "loader"]
