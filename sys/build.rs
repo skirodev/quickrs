@@ -125,6 +125,7 @@ fn main() {
     let target = env::var("TARGET").expect("No TARGET env var");
 
     if target == "wasm32-wasi" {
+        let src_dir = Path::new("../quickjs");
         build_wasi(&src_dir, &out_dir, &features);
     } else {
         build_non_wasi(&src_dir, out_dir, &features);
