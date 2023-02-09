@@ -25,7 +25,7 @@ pub enum Error {
     /// Found a string with a internal null byte while converting
     /// to C string.
     InvalidString(NulError),
-    /// String from quickrs was not UTF-8
+    /// String from rquickjs was not UTF-8
     Utf8(Utf8Error),
     /// An io error
     Io(IoError),

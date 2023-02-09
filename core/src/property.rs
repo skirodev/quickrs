@@ -7,7 +7,7 @@ impl<'js> Object<'js> {
     /// Define a property of an object
     ///
     /// ```
-    /// # use quickrs::{Runtime, Context, Object, Property, Accessor};
+    /// # use rquickjs::{Runtime, Context, Object, Property, Accessor};
     /// # let rt = Runtime::new().unwrap();
     /// # let ctx = Context::full(&rt).unwrap();
     /// # ctx.with(|ctx| {

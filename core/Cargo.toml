@@ -182,7 +182,7 @@ version = "1.8"
 default-features = false
 features = ["attributes"]
 
-[dev-dependencies.quickrs]
+[dev-dependencies.rquickjs]
 path = ".."
 
 [dev-dependencies]

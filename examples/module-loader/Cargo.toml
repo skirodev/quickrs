@@ -5,11 +5,11 @@ authors = ["K. <kayo@illumium.org>"]
 edition = "2018"
 publish = false
 
-[dependencies.quickrs]
+[dependencies.rquickjs]
 path = "../.."
 default-features = false
 features = ["exports", "async-std", "rust-alloc", "loader", "dyn-load"]
 
 [features]
 default = ["macro"]
-macro = ["quickrs/macro"]
+macro = ["rquickjs/macro"]

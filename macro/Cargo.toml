@@ -45,7 +45,7 @@ features = ["loader"]
 [dev-dependencies.difference]
 version = "2"
 
-[dev-dependencies.quickrs]
+[dev-dependencies.rquickjs]
 path = ".."
 version = "0.1.7"
 features = ["macro", "classes", "properties", "async-std"]

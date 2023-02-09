@@ -5,7 +5,10 @@ authors = ["Skiro"]
 edition = "2018"
 publish = false
 
-[dependencies.quickrs]
+[dependencies]
+tokio = { version = "1.25.0", features = [ "rt" ] }
+
+[dependencies.rquickjs]
 path = "../.."
 default-features = false
 features = ["exports", "loader"]

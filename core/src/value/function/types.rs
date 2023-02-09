@@ -10,7 +10,7 @@ use std::{
 /// The method-like functions is functions which get `this` as the first argument. This wrapper allows receive `this` directly as first argument and do not requires using [`This`] for that purpose.
 ///
 /// ```
-/// # use quickrs::{Runtime, Context, Result, Method, Function, This};
+/// # use rquickjs::{Runtime, Context, Result, Method, Function, This};
 /// # let rt = Runtime::new().unwrap();
 /// # let ctx = Context::full(&rt).unwrap();
 /// # ctx.with(|ctx| -> Result<()> {
@@ -31,7 +31,7 @@ pub struct Method<F>(pub F);
 /// The Rust functions should be wrapped to convert it to JS using [`IntoJs`] trait.
 ///
 /// ```
-/// # use quickrs::{Runtime, Context, Result, Func};
+/// # use rquickjs::{Runtime, Context, Result, Func};
 /// # let rt = Runtime::new().unwrap();
 /// # let ctx = Context::full(&rt).unwrap();
 /// # ctx.with(|ctx| -> Result<()> {
@@ -102,7 +102,7 @@ impl<F> From<F> for OnceFn<F> {
 /// The wrapper to get `this` from input
 ///
 /// ```
-/// # use quickrs::{Runtime, Context, Result, This, Function};
+/// # use rquickjs::{Runtime, Context, Result, This, Function};
 /// # let rt = Runtime::new().unwrap();
 /// # let ctx = Context::full(&rt).unwrap();
 /// # ctx.with(|ctx| -> Result<()> {
@@ -126,7 +126,7 @@ pub struct This<T>(pub T);
 /// The [`Option`] type cannot be used for that purpose because it implements [`FromJs`](crate::FromJs) trait and requires the argument which may be `undefined`.
 ///
 /// ```
-/// # use quickrs::{Runtime, Context, Result, Opt, Function};
+/// # use rquickjs::{Runtime, Context, Result, Opt, Function};
 /// # let rt = Runtime::new().unwrap();
 /// # let ctx = Context::full(&rt).unwrap();
 /// # ctx.with(|ctx| -> Result<()> {
@@ -150,7 +150,7 @@ pub struct Opt<T>(pub Option<T>);
 /// The [`Vec`] type cannot be used for that purpose because it implements [`FromJs`](crate::FromJs) and already used to convert JS arrays.
 ///
 /// ```
-/// # use quickrs::{Runtime, Context, Result, Rest, Function};
+/// # use rquickjs::{Runtime, Context, Result, Rest, Function};
 /// # let rt = Runtime::new().unwrap();
 /// # let ctx = Context::full(&rt).unwrap();
 /// # ctx.with(|ctx| -> Result<()> {

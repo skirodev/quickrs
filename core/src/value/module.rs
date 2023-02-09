@@ -145,7 +145,7 @@ impl<'js> Module<'js> {
 /// Helper macro to provide module init function
 ///
 /// ```
-/// use quickrs::{ModuleDef, module_init};
+/// use rquickjs::{ModuleDef, module_init};
 ///
 /// struct MyModule;
 /// impl ModuleDef for MyModule {}

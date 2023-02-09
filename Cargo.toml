@@ -1,12 +1,12 @@
 [package]
-name = "quickrs"
+name = "rquickjs"
 version = "0.1.7"
 authors = []
 edition = "2018"
 license = "MIT"
 readme = "README.md"
 description = "High level bindings to the QuickJS javascript engine"
-keywords = ["quickrs", "ecmascript", "javascript", "es6", "es2020"]
+keywords = ["rquickjs", "ecmascript", "javascript", "es6", "es2020"]
 categories = ["api-bindings"]
 
 [dependencies.rquickjs-core]

@@ -1,4 +1,4 @@
-use quickrs::{
+use rquickjs::{
     BuiltinLoader, BuiltinResolver, Context, FileResolver, Func, ModuleLoader, NativeLoader,
     Runtime, ScriptLoader,
 };

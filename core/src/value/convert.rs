@@ -8,7 +8,7 @@ mod into;
 /// The wrapper for values to force coercion
 ///
 /// ```
-/// # use quickrs::{Runtime, Context, Result, Coerced};
+/// # use rquickjs::{Runtime, Context, Result, Coerced};
 /// # let rt = Runtime::new().unwrap();
 /// # let ctx = Context::full(&rt).unwrap();
 /// # ctx.with(|ctx| -> Result<()> {
