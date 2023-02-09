@@ -86,6 +86,7 @@ fn build_wasi(src_dir: &Path, out_dir: &Path, features: &[&str]) {
     let output = command
         .arg(out_dir)
         .output().expect("error running wasicc");
+    println!("cargo:rustc-link-search={}", out_dir.as_os_str().to_str().unwrap());
 }
 
 fn main() {
