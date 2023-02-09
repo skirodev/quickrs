@@ -5,44 +5,7 @@ use std::{
     process::{Command, Stdio},
 };
 
-fn build_non_wasi() {
-
-}
-
-fn main() {
-    #[cfg(feature = "logging")]
-    pretty_env_logger::init();
-
-    println!("cargo:rerun-if-changed=build.rs");
-
-    let features = [
-        "exports",
-        "bindgen",
-        "update-bindings",
-        "dump-bytecode",
-        "dump-gc",
-        "dump-gc-free",
-        "dump-free",
-        "dump-leaks",
-        "dump-mem",
-        "dump-objects",
-        "dump-atoms",
-        "dump-shapes",
-        "dump-module-resolve",
-        "dump-promise",
-        "dump-read-object",
-    ];
-
-    for feature in &features {
-        println!("cargo:rerun-if-env-changed={}", feature_to_cargo(feature));
-    }
-
-    let src_dir = Path::new("quickjs");
-    
-
-    let out_dir = env::var("OUT_DIR").expect("No OUT_DIR env var is set by cargo");
-    let out_dir = Path::new(&out_dir);
-
+fn build_non_wasi<'a, X, K, V>(out_dir: &Path, src_dir: &Path, features: Vec<&str>) {
     let header_files = [
         "libbf.h",
         "libregexp-opcode.h",
@@ -70,6 +33,8 @@ fn main() {
         ("CONFIG_BIGNUM".into(), None),
     ];
 
+    // generating bindings
+    bindgen(out_dir, out_dir.join("quickjs.h"), &defines);
 
     for feature in &features {
         if feature.starts_with("dump-") && env::var(feature_to_cargo(feature)).is_ok() {
@@ -80,9 +45,6 @@ fn main() {
     for file in source_files.iter().chain(header_files.iter()) {
         fs::copy(src_dir.join(file), out_dir.join(file)).expect("Unable to copy source");
     }
-
-    // generating bindings
-    bindgen(out_dir, out_dir.join("quickjs.h"), &defines);
 
     let mut builder = cc::Build::new();
     builder
@@ -100,6 +62,43 @@ fn main() {
     }
 
     builder.compile("libquickjs.a");
+
+}
+
+fn main() {
+    #[cfg(feature = "logging")]
+    pretty_env_logger::init();
+
+    println!("cargo:rerun-if-changed=build.rs");
+
+    let features = [
+        "parallel",
+        "exports",
+        "bindgen",
+        "update-bindings",
+        "dump-bytecode",
+        "dump-gc",
+        "dump-gc-free",
+        "dump-free",
+        "dump-leaks",
+        "dump-mem",
+        "dump-objects",
+        "dump-atoms",
+        "dump-shapes",
+        "dump-module-resolve",
+        "dump-promise",
+        "dump-read-object",
+    ];
+
+    for feature in &features {
+        println!("cargo:rerun-if-env-changed={}", feature_to_cargo(feature));
+    }
+
+    let src_dir = Path::new("quickjs");
+    let out_dir = env::var("OUT_DIR").expect("No OUT_DIR env var is set by cargo");
+    let out_dir = Path::new(&out_dir);
+
+    
 }
 
 fn feature_to_cargo(name: impl AsRef<str>) -> String {
