@@ -33,6 +33,29 @@ fn build_non_wasi(src_dir: &Path, out_dir: &Path, features: &[&str]) {
         ("CONFIG_BIGNUM".into(), None),
     ];
 
+    let patches_dir = Path::new("patches");
+
+    let mut patch_files = vec![
+        "check_stack_overflow.patch",
+        "infinity_handling.patch",
+        "atomic_new_class_id.patch",
+    ];
+
+    if env::var("CARGO_CFG_TARGET_OS").unwrap() == "windows"
+        && env::var("CARGO_CFG_TARGET_ENV").unwrap() == "msvc"
+    {
+        patch_files.push("basic_msvc_compat.patch");
+    }
+
+    if env::var("CARGO_FEATURE_EXPORTS").is_ok() {
+        patch_files.push("read_module_exports.patch");
+        defines.push(("CONFIG_MODULE_EXPORTS".into(), None));
+    }
+    // applying patches
+    for file in &patch_files {
+        patch(out_dir, patches_dir.join(file));
+    }
+
     // generating bindings
     bindgen(out_dir, out_dir.join("quickjs.h"), &defines);
 
