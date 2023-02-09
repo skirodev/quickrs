@@ -5,7 +5,7 @@ use std::{
     process::{Command, Stdio},
 };
 
-fn build_non_wasi<'a, X, K, V>(out_dir: &Path, src_dir: &Path, features: Vec<&str>) {
+fn build_non_wasi(src_dir: &Path, out_dir: &Path, features: &[&str]) {
     let header_files = [
         "libbf.h",
         "libregexp-opcode.h",
@@ -36,7 +36,7 @@ fn build_non_wasi<'a, X, K, V>(out_dir: &Path, src_dir: &Path, features: Vec<&st
     // generating bindings
     bindgen(out_dir, out_dir.join("quickjs.h"), &defines);
 
-    for feature in &features {
+    for feature in features {
         if feature.starts_with("dump-") && env::var(feature_to_cargo(feature)).is_ok() {
             defines.push((feature_to_define(feature), None));
         }
@@ -63,6 +63,29 @@ fn build_non_wasi<'a, X, K, V>(out_dir: &Path, src_dir: &Path, features: Vec<&st
 
     builder.compile("libquickjs.a");
 
+}
+
+fn build_wasi(src_dir: &Path, out_dir: &Path, features: &[&str]) {
+    let mut defines = vec![
+        ("_GNU_SOURCE".into(), None),
+        ("CONFIG_VERSION".into(), Some("\"2020-01-19\"")),
+        ("CONFIG_BIGNUM".into(), None),
+    ];
+
+    for feature in features {
+        if feature.starts_with("dump-") && env::var(feature_to_cargo(feature)).is_ok() {
+            defines.push((feature_to_define(feature), None));
+        }
+    }
+
+    // generating bindings
+    bindgen(out_dir, out_dir.join("quickjs.h"), &defines);
+
+    let mut cwd = std::env::current_dir().unwrap();
+    let mut command = std::process::Command::new("./build_lib.sh");
+    let output = command
+        .arg(out_dir)
+        .output().expect("error running wasicc");
 }
 
 fn main() {
@@ -98,7 +121,13 @@ fn main() {
     let out_dir = env::var("OUT_DIR").expect("No OUT_DIR env var is set by cargo");
     let out_dir = Path::new(&out_dir);
 
-    
+    let target = env::var("TARGET").expect("No TARGET env var");
+
+    if target == "wasm32-wasi" {
+        build_wasi(&src_dir, &out_dir, &features);
+    } else {
+        build_non_wasi(&src_dir, out_dir, &features);
+    }
 }
 
 fn feature_to_cargo(name: impl AsRef<str>) -> String {
