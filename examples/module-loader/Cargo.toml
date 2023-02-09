@@ -12,4 +12,4 @@ features = ["exports", "async-std", "rust-alloc", "loader", "dyn-load"]
 
 [features]
 default = ["macro"]
-macro = ["rquickjs/macro"]
+macro = ["quickrs/macro"]

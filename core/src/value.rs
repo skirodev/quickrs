@@ -18,13 +18,12 @@ use crate::{qjs, Ctx, Error, Result};
 pub use module::{Created, Evaluated, Loaded, Module, ModuleDef, ModuleLoadFn, Native, Script};
 #[cfg(feature = "exports")]
 pub use module::{ExportEntriesIter, ExportNamesIter};
-
 pub use array::Array;
 pub use atom::*;
 pub use bigint::BigInt;
 pub use convert::*;
 pub use function::{
-    AsArguments, AsFunction, Func, Function, Method, MutFn, OnceFn, Opt, Rest, This,
+    Input, FromInput, InputAccessor, AsArguments, AsFunction, Func, Function, Method, MutFn, OnceFn, Opt, Rest, This,
 };
 pub use object::{Filter, Object, ObjectDef};
 pub use string::String;
