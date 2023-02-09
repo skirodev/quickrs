@@ -95,6 +95,10 @@ impl<'js> Ctx<'js> {
         handle_exception(self, val)
     }
 
+    pub fn raw_ctx(&self) -> *mut qjs::JSContext {
+        self.ctx
+    }
+    
     /// Evaluate a script in global context.
     pub fn eval<V: FromJs<'js>, S: Into<Vec<u8>>>(self, source: S) -> Result<V> {
         self.eval_with_options(source, Default::default())
