@@ -2509,7 +2509,7 @@ extern "C" {
 extern "C" {
     pub fn JS_ToCStringLen2(
         ctx: *mut JSContext,
-        plen: *mut usize,
+        plen: *mut ::std::os::raw::c_ulong,
         val1: JSValue,
         cesu8: ::std::os::raw::c_int,
     ) -> *const ::std::os::raw::c_char;
