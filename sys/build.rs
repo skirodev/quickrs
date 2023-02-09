@@ -51,10 +51,6 @@ fn build_non_wasi(src_dir: &Path, out_dir: &Path, features: &[&str]) {
         patch_files.push("read_module_exports.patch");
         defines.push(("CONFIG_MODULE_EXPORTS".into(), None));
     }
-    // applying patches
-    for file in &patch_files {
-        patch(out_dir, patches_dir.join(file));
-    }
 
     // generating bindings
     bindgen(out_dir, out_dir.join("quickjs.h"), &defines);
@@ -67,6 +63,11 @@ fn build_non_wasi(src_dir: &Path, out_dir: &Path, features: &[&str]) {
 
     for file in source_files.iter().chain(header_files.iter()) {
         fs::copy(src_dir.join(file), out_dir.join(file)).expect("Unable to copy source");
+    }
+
+    // applying patches
+    for file in &patch_files {
+        patch(out_dir, patches_dir.join(file));
     }
 
     let mut builder = cc::Build::new();
