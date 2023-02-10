@@ -96,9 +96,10 @@ fn main() {
         env::set_var("AR", format!("{}/bin/ar", &wasi_sdk_path));
         let sysroot = format!("--sysroot={}/share/wasi-sysroot", &wasi_sdk_path);
         env::set_var("CFLAGS", &sysroot);
+        env::set_var("BINDGEN_EXTRA_CLANG_ARGS", &sysroot);
         patch_files.push("not_safe_for_wasi.patch");
     }
-    
+
     for feature in &features {
         if feature.starts_with("dump-") && env::var(feature_to_cargo(feature)).is_ok() {
             defines.push((feature_to_define(feature), None));
