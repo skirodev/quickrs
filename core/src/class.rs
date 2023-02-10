@@ -699,6 +699,7 @@ mod test {
         });
     }
 
+    #[cfg(not(target_arch = "wasm32"))]
     #[test]
     fn concurrent_register() {
         struct X;
