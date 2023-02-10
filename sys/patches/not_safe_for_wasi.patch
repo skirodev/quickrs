@@ -1,0 +1,31 @@
+diff --git a/quickjs.c b/quickjs.c
+index 48aeffc..cb6c80d 100644
+--- a/quickjs.c
++++ b/quickjs.c
+@@ -38,6 +38,8 @@
+ #include <malloc.h>
+ #elif defined(__FreeBSD__)
+ #include <malloc_np.h>
++#else
++#include <malloc.h>
+ #endif
+ 
+ #include "cutils.h"
+@@ -62,17 +64,6 @@
+ #define MALLOC_OVERHEAD  8
+ #endif
+ 
+-#if !defined(_WIN32)
+-/* define it if printf uses the RNDN rounding mode instead of RNDNA */
+-#define CONFIG_PRINTF_RNDN
+-#endif
+-
+-/* define to include Atomics.* operations which depend on the OS
+-   threads */
+-#if !defined(EMSCRIPTEN)
+-#define CONFIG_ATOMICS
+-#endif
+-
+ #if !defined(EMSCRIPTEN)
+ /* enable stack limitation */
+ #define CONFIG_STACK_CHECK
